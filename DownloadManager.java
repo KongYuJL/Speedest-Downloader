@@ -5,46 +5,46 @@ import java.awt.event.ActionListener;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
- 
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 /**
- * ¿ØÖÆÏÂÔØ£º¿ªÊ¼¡¢ÔİÍ£¡¢Í£Ö¹
+ * æ§åˆ¶ä¸‹è½½ï¼šå¼€å§‹ã€æš‚åœã€åœæ­¢
  */
 public class DownloadManager extends JPanel{
 	protected Downloader downloader;
-	protected JButton startButton;//¿ªÊ¼
-	protected JButton sleepButton;//ÔİÍ£5Ãë
-	protected JButton suspendButton;//ÔİÍ£
-	protected JButton resumeButton;//»Ö¸´
-	protected JButton stopButton;//Í£Ö¹
-	
-	public DownloadManager(URL url, FileOutputStream fos) throws IOException{ 
+	protected JButton startButton;//å¼€å§‹
+	protected JButton sleepButton;//æš‚åœ5ç§’
+	protected JButton suspendButton;//æš‚åœ
+	protected JButton resumeButton;//æ¢å¤
+	protected JButton stopButton;//åœæ­¢
+
+	public DownloadManager(URL url, FileOutputStream fos) throws IOException{
 		downloader = new Downloader(url, fos);
 		buildLayout();
 		Border border = new BevelBorder(BevelBorder.RAISED);
 		String name = url.toString();
 		int index = name.lastIndexOf('/');
-		border = new TitledBorder(border, name.substring(index + 1)); 
+		border = new TitledBorder(border, name.substring(index + 1));
 		setBorder(border);
 	}
 	private void buildLayout() {
 		setLayout(new BorderLayout());
-		//BevelBorder:¸ÃÀàÊµÏÖ¼òµ¥µÄË«ÏßĞ±Ãæ±ß¿ò¡£ 
+		//BevelBorder:è¯¥ç±»å®ç°ç®€å•çš„åŒçº¿æ–œé¢è¾¹æ¡†ã€‚
 		downloader.setBorder(new BevelBorder(BevelBorder.RAISED));
 		add(downloader, BorderLayout.CENTER);
 		add(getButtonPanel(), BorderLayout.SOUTH);
 	}
-	//·ÅÖÃ°´Å¥µÄJPanel
+	//æ”¾ç½®æŒ‰é’®çš„JPanel
 	private JPanel getButtonPanel() {
-		JPanel outerPanel;//ÎªÁËµ÷ÕûºÃ²¼¾Ö¡£ 
+		JPanel outerPanel;//ä¸ºäº†è°ƒæ•´å¥½å¸ƒå±€ã€‚
 		JPanel innerPanel = new JPanel();
 		innerPanel.setLayout(new GridLayout(1, 5 , 10, 0));
-		
-		startButton = new JButton("¿ªÊ¼");
+
+		startButton = new JButton("å¼€å§‹");
 		startButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				startButton.setEnabled(false);
@@ -56,16 +56,16 @@ public class DownloadManager extends JPanel{
 			}
 		});
 		innerPanel.add(startButton);
-		sleepButton = new JButton("Ôİ¶¨5Ãë");
+		sleepButton = new JButton("æš‚å®š5ç§’");
 		sleepButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				downloader.setSleepScheduled(true);
 			}
-			
+
 		});
 		innerPanel.add(sleepButton);
-		
-		suspendButton = new JButton("ÔİÍ£");
+
+		suspendButton = new JButton("æš‚åœ");
 		suspendButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				suspendButton.setEnabled(false);
@@ -73,11 +73,11 @@ public class DownloadManager extends JPanel{
 				stopButton.setEnabled(true);
 				downloader.setSuspended(true);
 			}
-			
+
 		});
 		innerPanel.add(suspendButton);
-		
-		resumeButton = new JButton("»Ö¸´ÏÂÔØ");
+
+		resumeButton = new JButton("æ¢å¤ä¸‹è½½");
 		resumeButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				resumeButton.setEnabled(false);
@@ -85,11 +85,11 @@ public class DownloadManager extends JPanel{
 				stopButton.setEnabled(true);
 				downloader.resumeDownloader();
 			}
-			
+
 		});
 		innerPanel.add(resumeButton);
-		
-		stopButton = new JButton("Í£Ö¹");
+
+		stopButton = new JButton("åœæ­¢");
 		stopButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				stopButton.setEnabled(false);
@@ -99,10 +99,10 @@ public class DownloadManager extends JPanel{
 				startButton.setEnabled(true);
 				downloader.stopDownload();
 			}
-			
+
 		});
 		innerPanel.add(stopButton);
-		
+
 		outerPanel = new JPanel();
 		outerPanel.add(innerPanel);
 		return outerPanel;

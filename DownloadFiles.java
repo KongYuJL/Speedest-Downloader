@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URL;
 import java.net.URLConnection;
- 
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,12 +17,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 /**
- * ÓÃÓÚÔÚÎÄ±¾¿òÖĞÊäÈëURL²¢´´½¨¶ÔÓ¦µÄDownloadManagerÀàµÄÊµÀı
+ * ç”¨äºåœ¨æ–‡æœ¬æ¡†ä¸­è¾“å…¥URLå¹¶åˆ›å»ºå¯¹åº”çš„DownloadManagerç±»çš„å®ä¾‹
  */
 public class DownloadFiles extends JPanel{
-	protected JPanel listPanel;//·ÅÖÃ¸÷¸öÏÂÔØµÄÃæ°å
-	protected GridBagConstraints constraints;//Ö¸¶¨Ê¹ÓÃ GridBagLayoutÀà²¼ÖÃµÄ×é¼şµÄÔ¼Êø¡£
-	protected final String filepath = "G:/";//ËùÏÂÔØµÄÎÄ¼ş±£´æµÄÂ·¾¶
+	protected JPanel listPanel;//æ”¾ç½®å„ä¸ªä¸‹è½½çš„é¢æ¿
+	protected GridBagConstraints constraints;//æŒ‡å®šä½¿ç”¨ GridBagLayoutç±»å¸ƒç½®çš„ç»„ä»¶çš„çº¦æŸã€‚
+	protected final String filepath = "G:/";//æ‰€ä¸‹è½½çš„æ–‡ä»¶ä¿å­˜çš„è·¯å¾„
 	private int taskCount = 0;
 	static JFrame frame;
 	public static void main(String[] args){
@@ -35,9 +35,9 @@ public class DownloadFiles extends JPanel{
 	}
 	public DownloadFiles(){
 		try {
-		    UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");   
-	        //UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");   
-	        //UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");   
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+			//UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+			//UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -51,84 +51,84 @@ public class DownloadFiles extends JPanel{
 		constraints.anchor = GridBagConstraints.NORTH;
 		JScrollPane jsp = new JScrollPane(listPanel);
 		add(jsp, BorderLayout.CENTER);
-		
+
 		add(getAddURLPanel(), BorderLayout.SOUTH);
 	}
-	//µØÖ·À¸¡¢Á½°´Å¥
+	//åœ°å€æ ã€ä¸¤æŒ‰é’®
 	private JPanel getAddURLPanel() {
 		JPanel panel = new JPanel();
 		JLabel label = new JLabel("URL");
 		final JTextField textField = new JTextField(30);
-		final JButton downloadButton = new JButton("µã»÷ÏÂÔØ");
-		
+		final JButton downloadButton = new JButton("ç‚¹å‡»ä¸‹è½½");
+
 		ActionListener actionListener = new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				new Thread(){
 					public void run() {
-						downloadButton.setText("ÕıÔÚÁ¬½Ó");
+						downloadButton.setText("æ­£åœ¨è¿æ¥");
 						downloadButton.setEnabled(false);
 						if(createDownloader(textField.getText())){
 							textField.setText("");
 							++taskCount;
-							frame.setTitle("¹²ÓĞ£º" + taskCount + "¸öÏÂÔØÈÎÎñ");
+							frame.setTitle("å…±æœ‰ï¼š" + taskCount + "ä¸ªä¸‹è½½ä»»åŠ¡");
 							revalidate();
-							//ÖØĞÂäÖÈ¾·¢Éú±ä»¯µÄ×é¼ş
+							//é‡æ–°æ¸²æŸ“å‘ç”Ÿå˜åŒ–çš„ç»„ä»¶
 						}
-						downloadButton.setText("µã»÷ÏÂÔØ");
+						downloadButton.setText("ç‚¹å‡»ä¸‹è½½");
 						downloadButton.setEnabled(true);
 					}
 				}.start();
-				
+
 			}
 		};
-		//Ìí¼ÓactionListener¼àÌıÆ÷£¬EnterÒ»¼üÏÂÔØ
+		//æ·»åŠ actionListenerç›‘å¬å™¨ï¼ŒEnterä¸€é”®ä¸‹è½½
 		textField.addActionListener(actionListener);
 		downloadButton.addActionListener(actionListener);
-		
-		JButton clearAll = new JButton("Çå³ıËùÓĞ");
+
+		JButton clearAll = new JButton("æ¸…é™¤æ‰€æœ‰");
 		clearAll.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				Downloader.cancelAllAndWait();
 				listPanel.removeAll();
 				revalidate();
 				repaint();
-				frame.setTitle("Ä¿Ç°ÎŞÏÂÔØÈÎÎñ");
+				frame.setTitle("ç›®å‰æ— ä¸‹è½½ä»»åŠ¡");
 				taskCount = 0;
 			}
 		});
-		
+
 		panel.add(label);
 		panel.add(textField);
 		panel.add(downloadButton);
 		panel.add(clearAll);
 		return panel;
 	}
- 
+
 	private boolean createDownloader(String url) {
 		try {
 			URL downloadURL = new URL(url);
 			URLConnection urlconnection = downloadURL.openConnection();
 			int length = urlconnection.getContentLength();
 			if(length < 0){
-				throw new Exception("ÎŞ·¨È·¶¨ËùÏÂÔØÎÄ¼şµÄ³¤¶È!");
+				throw new Exception("æ— æ³•ç¡®å®šæ‰€ä¸‹è½½æ–‡ä»¶çš„é•¿åº¦!");
 			}
 			int index = url.lastIndexOf('/');
-			
+
 			File file=new File(filepath+url.substring(index + 1));
 			if(file.exists()){
-				JOptionPane.showMessageDialog(this, "¸ÃÎÄ¼şÒÑ¾­´æÔÚ",
-						"ÎŞ·¨ÏÂÔØ", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "è¯¥æ–‡ä»¶å·²ç»å­˜åœ¨",
+						"æ— æ³•ä¸‹è½½", JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
 			FileOutputStream fos = new FileOutputStream(file);
-			
+
 			//BufferedOutputStream bos = new BufferedOutputStream(fos);
 			DownloadManager dm = new DownloadManager(downloadURL, fos);
 			listPanel.add(dm, constraints);
 			return true;
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, "¸Ã×ÊÔ´ÎŞ·¨ÏÂÔØ¡£",
-					"ÎŞ·¨ÏÂÔØ£¡", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "è¯¥èµ„æºæ— æ³•ä¸‹è½½ã€‚",
+					"æ— æ³•ä¸‹è½½ï¼", JOptionPane.ERROR_MESSAGE);
 		}
 		return false;
 	}
