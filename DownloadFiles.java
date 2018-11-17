@@ -115,14 +115,14 @@ public class DownloadFiles extends JPanel{
 			int index = url.lastIndexOf('/');
 
 			File file = new File(filepath+url.substring(index + 1));
-			file.setWritable(true);
-
-			Runtime.getRuntime().exec("chmod 777 " + filepath+url.substring(index + 1));
 
 			if(file.exists()){
-				JOptionPane.showMessageDialog(this, "该文件已经存在",
-						"无法下载", JOptionPane.ERROR_MESSAGE);
-				return false;
+			    int flag;
+                flag = JOptionPane.showConfirmDialog(this, "是否覆盖原文件继续下载？",
+                        "该文件已经存在", JOptionPane.YES_NO_OPTION);
+                // 0代表是，1代表否
+                if(flag==1)
+                    return false;
 			}
 			FileOutputStream fos = new FileOutputStream(file);
 
