@@ -17,7 +17,6 @@ import javax.swing.border.TitledBorder;
 public class DownloadManager extends JPanel{
 	protected Downloader downloader;
 	protected JButton startButton;//开始
-	protected JButton sleepButton;//暂停5秒
 	protected JButton suspendButton;//暂停
 	protected JButton resumeButton;//恢复
 	protected JButton stopButton;//停止
@@ -48,7 +47,6 @@ public class DownloadManager extends JPanel{
 		startButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				startButton.setEnabled(false);
-				sleepButton.setEnabled(true);
 				resumeButton.setEnabled(false);
 				suspendButton.setEnabled(true);
 				stopButton.setEnabled(true);
@@ -56,14 +54,6 @@ public class DownloadManager extends JPanel{
 			}
 		});
 		innerPanel.add(startButton);
-		sleepButton = new JButton("暂定5秒");
-		sleepButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				downloader.setSleepScheduled(true);
-			}
-
-		});
-		innerPanel.add(sleepButton);
 
 		suspendButton = new JButton("暂停");
 		suspendButton.addActionListener(new ActionListener(){
@@ -93,7 +83,6 @@ public class DownloadManager extends JPanel{
 		stopButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				stopButton.setEnabled(false);
-				sleepButton.setEnabled(false);
 				suspendButton.setEnabled(false);
 				resumeButton.setEnabled(false);
 				startButton.setEnabled(true);

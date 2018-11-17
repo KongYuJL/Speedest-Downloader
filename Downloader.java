@@ -38,10 +38,7 @@ public class Downloader extends JPanel implements Runnable{
 	protected JProgressBar progressBar;//进度条
 
 	protected boolean stopped = false;//是否停止下载的标志
-	protected boolean sleepScheduled = false;//是否暂停一段时间的标志。
 	protected boolean suspended = false;//线程是否挂起
-
-	public final static int SLEEP_TIME = 5 * 1000;//暂停5秒
 
 	protected Thread thisThread;//当前线程
 	public static ThreadGroup downloaderGroup = new ThreadGroup("Donwload Threads");//线程组
@@ -133,15 +130,6 @@ public class Downloader extends JPanel implements Runnable{
 		};
 		while((bytesRead < fileSize) && (!isStopped())){
 			//是否暂停
-			if(isSleepScheduled()){
-				try {
-					Thread.sleep(SLEEP_TIME);
-				} catch (InterruptedException e) {
-					setStopped(true);
-					break;
-				}
-				setSleepScheduled(false);
-			}
 			try {
 				//从输入流中读取一定数量的字节，并将其存储在缓冲区数组 buffer中
 				//以整数形式返回实际读取的字节数。存储在缓冲区整数 byteCount中。
@@ -214,12 +202,6 @@ public class Downloader extends JPanel implements Runnable{
 	}
 	public synchronized boolean isStopped() {
 		return stopped;
-	}
-	public synchronized void setSleepScheduled(boolean sleepScheduled) {
-		this.sleepScheduled = sleepScheduled;
-	}
-	public synchronized boolean isSleepScheduled() {
-		return sleepScheduled ;
 	}
 	public synchronized void setSuspended(boolean suspended) {
 		this.suspended = suspended;

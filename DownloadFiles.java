@@ -22,7 +22,7 @@ import javax.swing.UIManager;
 public class DownloadFiles extends JPanel{
 	protected JPanel listPanel;//放置各个下载的面板
 	protected GridBagConstraints constraints;//指定使用 GridBagLayout类布置的组件的约束。
-	protected final String filepath = "G:/";//所下载的文件保存的路径
+	protected final String filepath = "/home/lionky/Documents";//所下载的文件保存的路径
 	private int taskCount = 0;
 	static JFrame frame;
 	public static void main(String[] args){
@@ -114,7 +114,11 @@ public class DownloadFiles extends JPanel{
 			}
 			int index = url.lastIndexOf('/');
 
-			File file=new File(filepath+url.substring(index + 1));
+			File file = new File(filepath+url.substring(index + 1));
+			file.setWritable(true);
+
+			Runtime.getRuntime().exec("chmod 777 " + filepath+url.substring(index + 1));
+
 			if(file.exists()){
 				JOptionPane.showMessageDialog(this, "该文件已经存在",
 						"无法下载", JOptionPane.ERROR_MESSAGE);
@@ -127,7 +131,7 @@ public class DownloadFiles extends JPanel{
 			listPanel.add(dm, constraints);
 			return true;
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, "该资源无法下载。",
+			JOptionPane.showMessageDialog(this, e.getMessage(),
 					"无法下载！", JOptionPane.ERROR_MESSAGE);
 		}
 		return false;
