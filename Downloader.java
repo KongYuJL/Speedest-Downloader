@@ -1,9 +1,9 @@
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-// è¿™ç§å¸ƒå±€æ¯”GridLayoutæ›´çµæ´»
-// ä½†æ˜¯åŠ å…¥ç»„ä»¶éœ€è¦å€ŸåŠ©GridBagConstraints
+// ÕâÖÖ²¼¾Ö±ÈGridLayout¸üÁé»î
+// µ«ÊÇ¼ÓÈë×é¼şĞèÒª½èÖúGridBagConstraints
 import java.awt.Insets;
-//è·å–çª—å£ä¸Šä¸‹å·¦å³çš„å¤§å°
+//»ñÈ¡´°¿ÚÉÏÏÂ×óÓÒµÄ´óĞ¡
 import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -16,45 +16,45 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-// è¿›åº¦æ¡ç»„ä»¶
+// ½ø¶ÈÌõ×é¼ş
 import javax.swing.SwingUtilities;
 /**
- * è¯»å–å¹¶å†™å…¥æ•°æ®
+ * ¶ÁÈ¡²¢Ğ´ÈëÊı¾İ
  *
  */
 public class Downloader extends JPanel implements Runnable{
-	private static final int BUFFER_SIZE = 1000;//byteæ•°ç»„çš„å¤§å°
-	protected URL downloadURL;//æ‰€ä¸‹è½½èµ„æºçš„URL
-	protected InputStream inputStream;//å­—èŠ‚è¾“å…¥æµçš„æ‰€æœ‰ç±»çš„è¶…ç±»
-	protected OutputStream outputStream;//å­—èŠ‚è¾“å‡ºæµçš„æ‰€æœ‰ç±»çš„è¶…ç±»
-	protected byte[] buffer;//ç¼“å†²åŒºbyteå‹æ•°ç»„bufferä¸­ï¼Œtcp/ip socketé€šä¿¡æ—¶ä½¿ç”¨
+	private static final int BUFFER_SIZE = 1000;//byteÊı×éµÄ´óĞ¡
+	protected URL downloadURL;//ËùÏÂÔØ×ÊÔ´µÄURL
+	protected InputStream inputStream;//×Ö½ÚÊäÈëÁ÷µÄËùÓĞÀàµÄ³¬Àà
+	protected OutputStream outputStream;//×Ö½ÚÊä³öÁ÷µÄËùÓĞÀàµÄ³¬Àà
+	protected byte[] buffer;//»º³åÇøbyteĞÍÊı×ébufferÖĞ£¬tcp/ip socketÍ¨ĞÅÊ±Ê¹ÓÃ
 
-	protected int fileSize;//æ–‡ä»¶çš„å¤§å°
-	protected int bytesRead;//å·²ç»è¯»å–çš„å­—èŠ‚æ•°
+	protected int fileSize;//ÎÄ¼şµÄ´óĞ¡
+	protected int bytesRead;//ÒÑ¾­¶ÁÈ¡µÄ×Ö½ÚÊı
 
-	protected JLabel urlLabel;//æ”¾ç½®URLçš„JLabel
-	protected JLabel sizeLabel;//æ”¾ç½®æ–‡ä»¶å¤§å°çš„JLabel
-	protected JLabel completeLabel;//æ”¾ç½®å·²ç»ä¸‹è½½å¤§å°çš„JLabel
-	protected JProgressBar progressBar;//è¿›åº¦æ¡
+	protected JLabel urlLabel;//·ÅÖÃURLµÄJLabel
+	protected JLabel sizeLabel;//·ÅÖÃÎÄ¼ş´óĞ¡µÄJLabel
+	protected JLabel completeLabel;//·ÅÖÃÒÑ¾­ÏÂÔØ´óĞ¡µÄJLabel
+	protected JProgressBar progressBar;//½ø¶ÈÌõ
 
-	protected boolean stopped = false;//æ˜¯å¦åœæ­¢ä¸‹è½½çš„æ ‡å¿—
-	protected boolean suspended = false;//çº¿ç¨‹æ˜¯å¦æŒ‚èµ·
+	protected boolean stopped = false;//ÊÇ·ñÍ£Ö¹ÏÂÔØµÄ±êÖ¾
+	protected boolean suspended = false;//Ïß³ÌÊÇ·ñ¹ÒÆğ
 
-	protected Thread thisThread;//å½“å‰çº¿ç¨‹
-	public static ThreadGroup downloaderGroup = new ThreadGroup("Donwload Threads");//çº¿ç¨‹ç»„
+	protected Thread thisThread;//µ±Ç°Ïß³Ì
+	public static ThreadGroup downloaderGroup = new ThreadGroup("Donwload Threads");//Ïß³Ì×é
 
 	public Downloader(URL url, FileOutputStream fos) throws IOException {
 		downloadURL = url;
 		outputStream = fos;
 		bytesRead = 0;
-		//URLConnectionæ„é€ ä¸€ä¸ªåˆ°æŒ‡å®š URL çš„ URL è¿æ¥ã€‚
+		//URLConnection¹¹ÔìÒ»¸öµ½Ö¸¶¨ URL µÄ URL Á¬½Ó¡£
 		URLConnection urlConnection = downloadURL.openConnection();
-		fileSize = urlConnection.getContentLength();//æ–‡ä»¶é•¿åº¦
+		fileSize = urlConnection.getContentLength();//ÎÄ¼ş³¤¶È
 
 		if(fileSize == -1){
 			throw new FileNotFoundException(url.toString());
 		}
-		//åœ¨åˆ›å»º BufferedInputStream æ—¶ï¼Œä¼šåˆ›å»ºä¸€ä¸ªå†…éƒ¨ç¼“å†²åŒºæ•°ç»„ã€‚
+		//ÔÚ´´½¨ BufferedInputStream Ê±£¬»á´´½¨Ò»¸öÄÚ²¿»º³åÇøÊı×é¡£
 		inputStream = new BufferedInputStream(urlConnection.getInputStream());
 		buffer = new byte[BUFFER_SIZE];
 		thisThread = new Thread(downloaderGroup, this);
@@ -65,33 +65,33 @@ public class Downloader extends JPanel implements Runnable{
 		JLabel label;
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
-		//ç»„ä»¶çš„æ˜¾ç¤ºåŒºåŸŸå¤§äºå®ƒæ‰€è¯·æ±‚çš„æ˜¾ç¤ºåŒºåŸŸçš„å¤§å°æ—¶ä½¿ç”¨æ­¤å­—æ®µã€‚HORIZONTALï¼šåœ¨æ°´å¹³æ–¹å‘è€Œä¸æ˜¯å‚ç›´æ–¹å‘ä¸Šè°ƒæ•´ç»„ä»¶å¤§å°ã€‚
+		//×é¼şµÄÏÔÊ¾ÇøÓò´óÓÚËüËùÇëÇóµÄÏÔÊ¾ÇøÓòµÄ´óĞ¡Ê±Ê¹ÓÃ´Ë×Ö¶Î¡£HORIZONTAL£ºÔÚË®Æ½·½Ïò¶ø²»ÊÇ´¹Ö±·½ÏòÉÏµ÷Õû×é¼ş´óĞ¡¡£
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		//insetsç»„ä»¶ä¸å…¶æ˜¾ç¤ºåŒºåŸŸè¾¹ç¼˜ä¹‹é—´é—´è·çš„æœ€å°é‡
+		//insets×é¼şÓëÆäÏÔÊ¾ÇøÓò±ßÔµÖ®¼ä¼ä¾àµÄ×îĞ¡Á¿
 		gbc.insets = new Insets(5 ,10, 5, 10);
-		//æŒ‡å®šåŒ…å«ç»„ä»¶çš„æ˜¾ç¤ºåŒºåŸŸå¼€å§‹è¾¹çš„"å•å…ƒæ ¼"ï¼Œå…¶ä¸­è¡Œçš„ç¬¬ä¸€ä¸ªå•å…ƒæ ¼ä¸º gridx=0ã€‚
+		//Ö¸¶¨°üº¬×é¼şµÄÏÔÊ¾ÇøÓò¿ªÊ¼±ßµÄ"µ¥Ôª¸ñ"£¬ÆäÖĞĞĞµÄµÚÒ»¸öµ¥Ôª¸ñÎª gridx=0¡£
 		gbc.gridx = 0;
-		label = new JLabel("åœ°å€:",  JLabel.LEFT);
+		label = new JLabel("µØÖ·:",  JLabel.LEFT);
 		add(label, gbc);
 
-		label = new JLabel("è¿›åº¦:",  JLabel.LEFT);
+		label = new JLabel("½ø¶È:",  JLabel.LEFT);
 		add(label, gbc);
 
-		label = new JLabel("å·²ç»ä¸‹è½½:",  JLabel.LEFT);
+		label = new JLabel("ÒÑ¾­ÏÂÔØ:",  JLabel.LEFT);
 		add(label, gbc);
 
 		gbc.gridx = 1;
-		//gridwidth:æŒ‡å®šç»„ä»¶æ˜¾ç¤ºåŒºåŸŸçš„æŸä¸€è¡Œä¸­çš„å•å…ƒæ ¼æ•°ã€‚  REMAINDER:æŒ‡å®šæ­¤ç»„ä»¶æ˜¯å…¶è¡Œæˆ–åˆ—ä¸­çš„æœ€åä¸€ä¸ªç»„ä»¶
+		//gridwidth:Ö¸¶¨×é¼şÏÔÊ¾ÇøÓòµÄÄ³Ò»ĞĞÖĞµÄµ¥Ôª¸ñÊı¡£  REMAINDER:Ö¸¶¨´Ë×é¼şÊÇÆäĞĞ»òÁĞÖĞµÄ×îºóÒ»¸ö×é¼ş
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		//weightx:æŒ‡å®šå¦‚ä½•åˆ†å¸ƒé¢å¤–çš„æ°´å¹³ç©ºé—´ã€‚
-		//å¦‚æœå¾—åˆ°çš„å¸ƒå±€åœ¨æ°´å¹³æ–¹å‘ä¸Šæ¯”éœ€è¦å¡«å……çš„åŒºåŸŸå°ï¼Œé‚£ä¹ˆç³»ç»Ÿä¼šå°†é¢å¤–çš„ç©ºé—´æŒ‰ç…§å…¶æƒé‡æ¯”ä¾‹åˆ†å¸ƒåˆ°æ¯ä¸€åˆ—ã€‚
-		//æƒé‡ä¸ºé›¶çš„åˆ—ä¸ä¼šå¾—åˆ°é¢å¤–çš„ç©ºé—´ã€‚
+		//weightx:Ö¸¶¨ÈçºÎ·Ö²¼¶îÍâµÄË®Æ½¿Õ¼ä¡£
+		//Èç¹ûµÃµ½µÄ²¼¾ÖÔÚË®Æ½·½ÏòÉÏ±ÈĞèÒªÌî³äµÄÇøÓòĞ¡£¬ÄÇÃ´ÏµÍ³»á½«¶îÍâµÄ¿Õ¼ä°´ÕÕÆäÈ¨ÖØ±ÈÀı·Ö²¼µ½Ã¿Ò»ÁĞ¡£
+		//È¨ÖØÎªÁãµÄÁĞ²»»áµÃµ½¶îÍâµÄ¿Õ¼ä¡£
 		gbc.weightx = 1;
 		urlLabel = new JLabel(downloadURL.toString());
 		add(urlLabel, gbc);
 
 		progressBar = new JProgressBar(0, fileSize);
-		// åˆ›å»ºä¸€ä¸ªæœ€å°å€¼ä¸º0ï¼Œæœ€å¤§å€¼ä¸ºfilzesizeçš„è¿›åº¦æ¡
+		// ´´½¨Ò»¸ö×îĞ¡ÖµÎª0£¬×î´óÖµÎªfilzesizeµÄ½ø¶ÈÌõ
 		progressBar.setStringPainted(true);
 		// which determines whether the progress bar should render a progress string.
 		add(progressBar, gbc);
@@ -102,12 +102,12 @@ public class Downloader extends JPanel implements Runnable{
 
 		gbc.gridx = 2;
 		gbc.weightx = 0;
-		//å½“ç»„ä»¶å°äºå…¶æ˜¾ç¤ºåŒºåŸŸæ—¶ä½¿ç”¨æ­¤å­—æ®µã€‚
-		//å®ƒå¯ä»¥ç¡®å®šåœ¨æ˜¾ç¤ºåŒºåŸŸä¸­æ”¾ç½®ç»„ä»¶çš„ä½ç½®ã€‚
+		//µ±×é¼şĞ¡ÓÚÆäÏÔÊ¾ÇøÓòÊ±Ê¹ÓÃ´Ë×Ö¶Î¡£
+		//Ëü¿ÉÒÔÈ·¶¨ÔÚÏÔÊ¾ÇøÓòÖĞ·ÅÖÃ×é¼şµÄÎ»ÖÃ¡£
 		gbc.anchor = GridBagConstraints.EAST;
-		label = new JLabel("æ–‡ä»¶å¤§å°:", JLabel.LEFT);
+		label = new JLabel("ÎÄ¼ş´óĞ¡:", JLabel.LEFT);
 		add(label, gbc);
-		///æŒ‡å®šåŒ…å«ç»„ä»¶çš„æ˜¾ç¤ºåŒºåŸŸå¼€å§‹è¾¹çš„"å•å…ƒæ ¼",å…¶ä¸­è¡Œçš„ç¬¬ä¸€ä¸ªå•å…ƒæ ¼ä¸º gridx=0ã€‚
+		///Ö¸¶¨°üº¬×é¼şµÄÏÔÊ¾ÇøÓò¿ªÊ¼±ßµÄ"µ¥Ôª¸ñ",ÆäÖĞĞĞµÄµÚÒ»¸öµ¥Ôª¸ñÎª gridx=0¡£
 		gbc.gridx = 3;
 		gbc.weightx = 1;
 		sizeLabel = new JLabel(Integer.toString(fileSize));
@@ -117,11 +117,11 @@ public class Downloader extends JPanel implements Runnable{
 		performDownload();
 	}
 	/**
-	 * è´Ÿè´£æ‰§è¡Œä¸‹è½½çš„æ–¹æ³•ã€‚
+	 * ¸ºÔğÖ´ĞĞÏÂÔØµÄ·½·¨¡£
 	 */
 	private void performDownload() {
 		int byteCount;
-		//åˆ·æ–°è¿›åº¦æ¡å’ŒcompleteLabelï¼šæ˜¯AWTæ—¶é—´çº¿ç¨‹ä¸ä¸‹è½½çº¿ç¨‹åŒæ­¥
+		//Ë¢ĞÂ½ø¶ÈÌõºÍcompleteLabel£ºÊÇAWTÊ±¼äÏß³ÌÓëÏÂÔØÏß³ÌÍ¬²½
 		Runnable progressBarUpdate = new Runnable(){
 			public void run() {
 				progressBar.setValue(bytesRead);
@@ -129,10 +129,10 @@ public class Downloader extends JPanel implements Runnable{
 			}
 		};
 		while((bytesRead < fileSize) && (!isStopped())){
-			//æ˜¯å¦æš‚åœ
+			//ÊÇ·ñÔİÍ£
 			try {
-				//ä»è¾“å…¥æµä¸­è¯»å–ä¸€å®šæ•°é‡çš„å­—èŠ‚ï¼Œå¹¶å°†å…¶å­˜å‚¨åœ¨ç¼“å†²åŒºæ•°ç»„ bufferä¸­
-				//ä»¥æ•´æ•°å½¢å¼è¿”å›å®é™…è¯»å–çš„å­—èŠ‚æ•°ã€‚å­˜å‚¨åœ¨ç¼“å†²åŒºæ•´æ•° byteCountä¸­ã€‚
+				//´ÓÊäÈëÁ÷ÖĞ¶ÁÈ¡Ò»¶¨ÊıÁ¿µÄ×Ö½Ú£¬²¢½«Æä´æ´¢ÔÚ»º³åÇøÊı×é bufferÖĞ
+				//ÒÔÕûÊıĞÎÊ½·µ»ØÊµ¼Ê¶ÁÈ¡µÄ×Ö½ÚÊı¡£´æ´¢ÔÚ»º³åÇøÕûÊı byteCountÖĞ¡£
 				byteCount = inputStream.read(buffer);
 				if(byteCount == -1){
 					setStopped(true);
@@ -140,7 +140,7 @@ public class Downloader extends JPanel implements Runnable{
 				}else{
 					outputStream.write(buffer, 0, byteCount);
 					bytesRead += byteCount;
-					//è¿›åº¦æ¡çš„çº¿ç¨‹ï¼ˆåˆ›å»ºå¤šçº¿ç¨‹åº”ç”¨ç¨‹åºå¦‚æœéœ€è¦ä¿®æ”¹å¯è§†åŒ–ç»„ä»¶ï¼Œå¯ä»¥è°ƒç”¨çš„SwingUtilitiesç±»çš„invokeLater()æ–¹æ³•å’ŒinvokeAndWait()æ–¹æ³•ï¼‰
+					//½ø¶ÈÌõµÄÏß³Ì£¨´´½¨¶àÏß³ÌÓ¦ÓÃ³ÌĞòÈç¹ûĞèÒªĞŞ¸Ä¿ÉÊÓ»¯×é¼ş£¬¿ÉÒÔµ÷ÓÃµÄSwingUtilitiesÀàµÄinvokeLater()·½·¨ºÍinvokeAndWait()·½·¨£©
 					SwingUtilities.invokeLater(progressBarUpdate);
 				}
 			} catch (IOException e) {
@@ -151,11 +151,11 @@ public class Downloader extends JPanel implements Runnable{
 						JOptionPane.ERROR_MESSAGE);
 				break;
 			}
-			//æ˜¯å¦æš‚åœ
+			//ÊÇ·ñÔİÍ£
 			synchronized(this){
 				if(isSuspended()){
 					try {
-						//ä¸‹è½½çº¿ç¨‹è°ƒç”¨wait()æ–¹æ³•åä¼šéšå¼çš„æ”¾å¼ƒç›‘æ§çš„æ‰€æœ‰æƒ
+						//ÏÂÔØÏß³Ìµ÷ÓÃwait()·½·¨ºó»áÒşÊ½µÄ·ÅÆú¼à¿ØµÄËùÓĞÈ¨
 						this.wait();
 					} catch (InterruptedException e) {
 						setStopped(true);
@@ -164,24 +164,24 @@ public class Downloader extends JPanel implements Runnable{
 					setSuspended(false);
 				}
 			}
-			//æµ‹è¯•å½“å‰çº¿ç¨‹æ˜¯å¦å·²ç»ä¸­æ–­ã€‚
+			//²âÊÔµ±Ç°Ïß³ÌÊÇ·ñÒÑ¾­ÖĞ¶Ï¡£
 			if(Thread.interrupted()){
 				setStopped(true);
 				break;
 			}
 		}
 		try {
-			//å…³é—­æµï¼Œæ–­å¼€ä¸æ‰€ä¸‹è½½æ–‡ä»¶çš„è¿æ¥
+			//¹Ø±ÕÁ÷£¬¶Ï¿ªÓëËùÏÂÔØÎÄ¼şµÄÁ¬½Ó
 			inputStream.close();
 			outputStream.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//æ˜¯å¦ä¸‹è½½å®Œäº†ï¼Ÿ
+		//ÊÇ·ñÏÂÔØÍêÁË£¿
 		if(bytesRead == fileSize){
 			JOptionPane.showMessageDialog(null,
-					"å®Œæˆä¸‹è½½",
-					"å·²ä¸‹è½½å®Œæˆï¼",
+					"Íê³ÉÏÂÔØ",
+					"ÒÑÏÂÔØÍê³É£¡",
 					JOptionPane.INFORMATION_MESSAGE);
 			//System.exit(1);
 		}
@@ -193,8 +193,8 @@ public class Downloader extends JPanel implements Runnable{
 		thisThread.interrupt();
 	}
 	public synchronized void resumeDownloader() {
-		//notify()å’ŒnotifyAll()æ–¹æ³•å¹¶ä¸ä¼šè®©ç­‰å¾…çº¿ç¨‹ç«‹å³å›å¤æ‰§è¡Œã€‚
-		//ç­‰å¾…çº¿ç¨‹è¦å›å¤æ‰§è¡Œï¼Œå°±å¿…é¡»å…ˆå–å¾—ä¸çº¿ç¨‹åŒæ­¥çš„å¯¹è±¡ç›‘æ§
+		//notify()ºÍnotifyAll()·½·¨²¢²»»áÈÃµÈ´ıÏß³ÌÁ¢¼´»Ø¸´Ö´ĞĞ¡£
+		//µÈ´ıÏß³ÌÒª»Ø¸´Ö´ĞĞ£¬¾Í±ØĞëÏÈÈ¡µÃÓëÏß³ÌÍ¬²½µÄ¶ÔÏó¼à¿Ø
 		this.notify();
 	}
 	public synchronized void setStopped(boolean stopped) {
@@ -210,10 +210,10 @@ public class Downloader extends JPanel implements Runnable{
 		return suspended;
 	}
 	public static void cancelAllAndWait(){
-		//activeCount()è¿”å›çº¿ç¨‹ç»„ä¸­æ´»åŠ¨çº¿ç¨‹çš„ä¸ªæ•°
+		//activeCount()·µ»ØÏß³Ì×éÖĞ»î¶¯Ïß³ÌµÄ¸öÊı
 		int count = downloaderGroup.activeCount();
 		Thread[] threads = new Thread[count];
-		//enumerate()å°†æ¯ä¸ªæ´»åŠ¨çš„çº¿ç¨‹çš„å¼•ç”¨å­˜å…¥threadsæ•°ç»„ä¸­ï¼Œå¹¶è¿”å›threadsæ•°ç»„ä¸­çš„çº¿ç¨‹æ•°
+		//enumerate()½«Ã¿¸ö»î¶¯µÄÏß³ÌµÄÒıÓÃ´æÈëthreadsÊı×éÖĞ£¬²¢·µ»ØthreadsÊı×éÖĞµÄÏß³ÌÊı
 		count = downloaderGroup.enumerate(threads);
 
 		downloaderGroup.interrupt();
@@ -226,7 +226,7 @@ public class Downloader extends JPanel implements Runnable{
 		}
 	}
 	/*
-	 * æ³¨æ„ï¼šThreadç±»ä¸­çš„suspended()ã€resume()ã€stop()æ–¹æ³•éƒ½æ˜¯å·²ç»è¿‡æ—¶çš„ã€‚
-	 * è¿™é‡Œä¹Ÿæ²¡æœ‰è°ƒç”¨ã€‚è€Œæ˜¯æ‰‹åŠ¨å®ç°å¯¹åº”çš„åŠŸèƒ½ã€‚
+	 * ×¢Òâ£ºThreadÀàÖĞµÄsuspended()¡¢resume()¡¢stop()·½·¨¶¼ÊÇÒÑ¾­¹ıÊ±µÄ¡£
+	 * ÕâÀïÒ²Ã»ÓĞµ÷ÓÃ¡£¶øÊÇÊÖ¶¯ÊµÏÖ¶ÔÓ¦µÄ¹¦ÄÜ¡£
 	 */
 }

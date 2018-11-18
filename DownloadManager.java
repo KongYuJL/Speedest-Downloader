@@ -12,14 +12,14 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 /**
- * æ§åˆ¶ä¸‹è½½ï¼šå¼€å§‹ã€æš‚åœã€åœæ­¢
+ * ¿ØÖÆÏÂÔØ£º¿ªÊ¼¡¢ÔİÍ£¡¢Í£Ö¹
  */
 public class DownloadManager extends JPanel{
 	protected Downloader downloader;
-	protected JButton startButton;//å¼€å§‹
-	protected JButton suspendButton;//æš‚åœ
-	protected JButton resumeButton;//æ¢å¤
-	protected JButton stopButton;//åœæ­¢
+	protected JButton startButton;//¿ªÊ¼
+	protected JButton suspendButton;//ÔİÍ£
+	protected JButton resumeButton;//»Ö¸´
+	protected JButton stopButton;//Í£Ö¹
 
 	public DownloadManager(URL url, FileOutputStream fos) throws IOException{
 		downloader = new Downloader(url, fos);
@@ -32,18 +32,18 @@ public class DownloadManager extends JPanel{
 	}
 	private void buildLayout() {
 		setLayout(new BorderLayout());
-		//BevelBorder:è¯¥ç±»å®ç°ç®€å•çš„åŒçº¿æ–œé¢è¾¹æ¡†ã€‚
+		//BevelBorder:¸ÃÀàÊµÏÖ¼òµ¥µÄË«ÏßĞ±Ãæ±ß¿ò¡£
 		downloader.setBorder(new BevelBorder(BevelBorder.RAISED));
 		add(downloader, BorderLayout.CENTER);
 		add(getButtonPanel(), BorderLayout.SOUTH);
 	}
-	//æ”¾ç½®æŒ‰é’®çš„JPanel
+	//·ÅÖÃ°´Å¥µÄJPanel
 	private JPanel getButtonPanel() {
-		JPanel outerPanel;//ä¸ºäº†è°ƒæ•´å¥½å¸ƒå±€ã€‚
+		JPanel outerPanel;//ÎªÁËµ÷ÕûºÃ²¼¾Ö¡£
 		JPanel innerPanel = new JPanel();
 		innerPanel.setLayout(new GridLayout(1, 5 , 10, 0));
 
-		startButton = new JButton("å¼€å§‹");
+		startButton = new JButton("¿ªÊ¼");
 		startButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				startButton.setEnabled(false);
@@ -55,7 +55,7 @@ public class DownloadManager extends JPanel{
 		});
 		innerPanel.add(startButton);
 
-		suspendButton = new JButton("æš‚åœ");
+		suspendButton = new JButton("ÔİÍ£");
 		suspendButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				suspendButton.setEnabled(false);
@@ -67,7 +67,7 @@ public class DownloadManager extends JPanel{
 		});
 		innerPanel.add(suspendButton);
 
-		resumeButton = new JButton("æ¢å¤ä¸‹è½½");
+		resumeButton = new JButton("»Ö¸´ÏÂÔØ");
 		resumeButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				resumeButton.setEnabled(false);
@@ -79,7 +79,7 @@ public class DownloadManager extends JPanel{
 		});
 		innerPanel.add(resumeButton);
 
-		stopButton = new JButton("åœæ­¢");
+		stopButton = new JButton("Í£Ö¹");
 		stopButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				stopButton.setEnabled(false);
