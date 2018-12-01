@@ -14,7 +14,7 @@ public class MuchThreadDown {
     private String path = null;
     private String targetFilePath="/";  // 下载文件存放目录
     private int threadCount = 3;    // 线程数量
-    File file = null;
+    private int completeThread = 0; // 完成下载的线程数量
 
     /**
      * ????
@@ -136,8 +136,12 @@ public class MuchThreadDown {
                     downThreadStream.close();
                     inputStream.close();
                     randomAccessFile.close();
-                    cleanTemp(downThreadFile);//??????
+                    cleanTemp(downThreadFile);
                     System.out.println("线程"+ threadId + "下载完毕");
+                    completeThread++;
+                    if (completeThread == threadCount) {
+                        JOptionPane.showMessageDialog(null, "下载完成！");
+                    }
                 }else{
                     JOptionPane.showMessageDialog(null, "响应码是" +connection.getResponseCode() + ". 服务器不支持多线程下载",
                             "无法下载！", JOptionPane.ERROR_MESSAGE);

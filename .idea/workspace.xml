@@ -2,21 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1eae95cf-39bb-45d8-9ddb-be661788bb0c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DownloadFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/DownloadFiles.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DownloadManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/DownloadManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/Downloader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Speedest-Downloader/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Speedest-Downloader/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Speedest-Downloader/DownloadFiles$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Speedest-Downloader/DownloadFiles$1$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Speedest-Downloader/DownloadFiles$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Speedest-Downloader/DownloadFiles$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Speedest-Downloader/DownloadFiles$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Speedest-Downloader/DownloadFiles$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Speedest-Downloader/DownloadFiles.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Speedest-Downloader/DownloadFiles.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Speedest-Downloader/DownloadManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Speedest-Downloader/DownloadManager$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Speedest-Downloader/DownloadManager$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Speedest-Downloader/DownloadManager$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Speedest-Downloader/DownloadManager$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Speedest-Downloader/DownloadManager$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Speedest-Downloader/DownloadManager$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Speedest-Downloader/DownloadManager$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Speedest-Downloader/DownloadManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Speedest-Downloader/DownloadManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MuchThreadDown.java" beforeDir="false" afterPath="$PROJECT_DIR$/MuchThreadDown.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Speedest-Downloader/MuchThreadDown$DownloadThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Speedest-Downloader/MuchThreadDown$DownloadThread.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Speedest-Downloader/MuchThreadDown.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Speedest-Downloader/MuchThreadDown.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,7 +19,7 @@
     <session id="624244433">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="13" />
+          <entry key="project.closed" value="14" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.100" value="1" />
           <entry key="project.open.time.12" value="1" />
@@ -69,13 +57,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="3118" />
+          <entry key="java" value="3247" />
           <entry key="xml" value="11" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="3118" />
+          <entry key="JAVA" value="3247" />
           <entry key="XML" value="11" />
         </counts>
       </usages-collector>
@@ -98,8 +86,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MuchThreadDown.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="526">
-              <caret line="102" column="17" lean-forward="true" selection-start-line="102" selection-start-column="17" selection-end-line="102" selection-end-column="17" />
+            <state relative-caret-position="519">
+              <caret line="145" column="56" lean-forward="true" selection-start-line="145" selection-start-column="56" selection-end-line="145" selection-end-column="56" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -119,8 +107,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DownloadManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="72" column="45" lean-forward="true" selection-start-line="72" selection-start-column="45" selection-end-line="72" selection-end-column="45" />
+            <state relative-caret-position="198">
+              <caret line="62" column="13" lean-forward="true" selection-start-line="62" selection-start-column="13" selection-end-line="62" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -216,7 +204,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="2009" />
     <option name="y" value="258" />
     <option name="width" value="1380" />
@@ -238,7 +226,20 @@
             <path>
               <item name="Speedest-Downloader" type="b2602c69:ProjectViewProjectNode" />
               <item name="Speedest-Downloader" type="462c0819:PsiDirectoryNode" />
-              <item name=".idea" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Speedest-Downloader" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Speedest-Downloader" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="production" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Speedest-Downloader" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Speedest-Downloader" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="production" type="462c0819:PsiDirectoryNode" />
+              <item name="Speedest-Downloader" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -251,7 +252,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543495687299" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543620692662" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../MultiplyDowloader" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="/usr/local/bin/node" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -308,18 +309,18 @@
       <workItem from="1543107671706" duration="1846000" />
       <workItem from="1543320139919" duration="10745000" />
       <workItem from="1543457072262" duration="20910000" />
-      <workItem from="1543570298651" duration="4805000" />
+      <workItem from="1543570298651" duration="6337000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="74070000" />
+    <option name="totallyTimeSpent" value="75602000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1920" y="0" width="1920" height="1080" extended-state="7" />
+    <frame x="1920" y="0" width="1920" height="1080" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1189968" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14834578" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -328,7 +329,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.17340426" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.17340426" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -472,13 +473,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DownloadManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="72" column="45" lean-forward="true" selection-start-line="72" selection-start-column="45" selection-end-line="72" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Downloader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-850">
@@ -503,10 +497,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/DownloadManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="62" column="13" lean-forward="true" selection-start-line="62" selection-start-column="13" selection-end-line="62" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/MuchThreadDown.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="526">
-          <caret line="102" column="17" lean-forward="true" selection-start-line="102" selection-start-column="17" selection-end-line="102" selection-end-column="17" />
+        <state relative-caret-position="519">
+          <caret line="145" column="56" lean-forward="true" selection-start-line="145" selection-start-column="56" selection-end-line="145" selection-end-column="56" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
