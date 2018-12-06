@@ -27,6 +27,7 @@ public class DownloadManager extends JPanel{
 	protected int taskCount;
 	private String path = null;
 	private String filepath = null;
+	private boolean muchDownloadFlag = false;
 
 	public DownloadManager(URL url, FileOutputStream fos, String path, String filepath, JPanel lp, int tc) throws IOException{
 		listPanel = lp;
@@ -59,6 +60,7 @@ public class DownloadManager extends JPanel{
 		startButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				startButton.setEnabled(false);
+				mulStartButton.setEnabled(false);
 				resumeButton.setEnabled(false);
 				suspendButton.setEnabled(true);
 				stopButton.setEnabled(true);
@@ -76,6 +78,7 @@ public class DownloadManager extends JPanel{
 				mulStartButton.setEnabled(false);
 				stopButton.setEnabled(false);
 				resumeButton.setEnabled(false);
+				muchDownloadFlag = true;
 				try {
 					MuchThreadDownloader.download();
 				} catch (Exception err) {
@@ -91,6 +94,7 @@ public class DownloadManager extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				suspendButton.setEnabled(false);
 				resumeButton.setEnabled(true);
+				mulStartButton.setEnabled(false);
 				stopButton.setEnabled(true);
 				downloader.setSuspended(true);
 			}
@@ -106,6 +110,14 @@ public class DownloadManager extends JPanel{
 				suspendButton.setEnabled(true);
 				stopButton.setEnabled(true);
 				downloader.resumeDownloader();
+				if (muchDownloadFlag) {
+					MuchThreadDownloader.resumeDownloader();
+					try {
+						MuchThreadDownloader.download();
+					} catch (Exception err) {
+						err.printStackTrace();
+					}
+				}
 			}
 
 		});
@@ -119,6 +131,7 @@ public class DownloadManager extends JPanel{
 				resumeButton.setEnabled(false);
 				startButton.setEnabled(true);
 				mulStartButton.setEnabled(true);
+				downloader.setSuspended(true);
 				downloader.stopDownload();
 			}
 

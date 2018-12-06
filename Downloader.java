@@ -201,6 +201,7 @@ public class Downloader extends JPanel implements Runnable{
 		//notify()和notifyAll()方法并不会让等待线程立即回复执行。
 		//等待线程要回复执行，就必须先取得与线程同步的对象监控
 		this.notify();
+		this.suspended = false;
 	}
 	public synchronized void setStopped(boolean stopped) {
 		this.stopped = stopped;

@@ -13,11 +13,12 @@ public class MuchThreadDown {
 
     private String path = null;
     private String targetFilePath="/";  // 下载文件存放目录
-    private int threadCount = 3;    // 线程数量
+    private int threadCount = 5;    // 线程数量
     private int completeThread = 0; // 完成下载的线程数量
     protected JButton[] buttons= new JButton[5];
     protected Downloader downloader = null;
     protected int total;//已经读取的字节数
+    Thread[] threads = new Thread[threadCount+1];
 
     /**
      * @param path 文件 url
@@ -66,6 +67,7 @@ public class MuchThreadDown {
                 new DownloadThread(threadId, startIndex, endIndex).start();// 开启线程下载
 
             }
+            threads[threadCount] = new DownloadThread(threadCount, 0, 0);
         }
 
     }
@@ -73,9 +75,9 @@ public class MuchThreadDown {
     // 下载的线程
     private class DownloadThread extends Thread{
 
-        private int threadId;
-        private int startIndex;
-        private int endIndex;
+        private int threadId = 0;
+        private int startIndex = 0;
+        private int endIndex = 0;
 
         public DownloadThread(int threadId, int startIndex, int endIndex) {
             this.threadId = threadId;
@@ -133,15 +135,29 @@ public class MuchThreadDown {
                      */
                     byte[] buffer = new byte[1024];
                     int length = -1;
-                    while((length = inputStream.read(buffer)) > 0 && (!downloader.isStopped())){
+                    while((length = inputStream.read(buffer)) > 0){
                         randomAccessFile.write(buffer, 0, length);
                         total += length;
+                        System.out.println("total: " + total);
                         SwingUtilities.invokeLater(progressBarUpdate);
                         /*
                          * 将当前下载到的位置保存到文件中
                          */
                         downThreadStream.seek(0);
                         downThreadStream.write((startIndex + total + "").getBytes("UTF-8"));
+
+                        // 是否暂停
+                        synchronized(this){
+                            if(downloader.isSuspended()){
+                                try {
+                                    //下载线程调用wait()方法后会隐式的放弃监控的所有权
+                                    this.wait();
+                                } catch (Exception e) {
+                                    downloader.setStopped(true);
+                                    break;
+                                }
+                            }
+                        }
                     }
 
                     downThreadStream.close();
@@ -169,6 +185,17 @@ public class MuchThreadDown {
     // 删除线程产生的临时文件
     private synchronized void cleanTemp(File file){
         file.delete();
+    }
+
+    // 恢复下载
+    public synchronized void resumeDownloader() {
+        //notify()和notifyAll()方法并不会让等待线程立即回复执行。
+        //等待线程要回复执行，就必须先取得与线程同步的对象监控
+        Thread notifyer = new Thread("notifyer");
+        notifyer.start();
+        synchronized (notifyer) {
+            notifyer.notifyAll();
+        }
     }
 
     // 获取下载文件的名称
