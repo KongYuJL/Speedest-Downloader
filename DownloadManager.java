@@ -37,8 +37,8 @@ public class DownloadManager extends JPanel{
 		//BevelBorder:该类实现简单的双线斜面边框。
 		add(getButtonPanel(), BorderLayout.SOUTH);
 
-		MuchThreadDownloader = new MuchThreadDown(path, filepath, 5, buttons);
 		downloader = new Downloader(url, fos, buttons);
+		MuchThreadDownloader = new MuchThreadDown(path, filepath, 5, buttons, downloader);
 
 		add(downloader, BorderLayout.CENTER);
 		downloader.setBorder(new BevelBorder(BevelBorder.RAISED));

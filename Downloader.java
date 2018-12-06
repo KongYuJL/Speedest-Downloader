@@ -4,12 +4,8 @@ import java.awt.GridBagLayout;
 // 但是加入组件需要借助GridBagConstraints
 import java.awt.Insets;
 //获取窗口上下左右的大小
-import java.io.BufferedInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import javax.swing.*;
@@ -40,6 +36,14 @@ public class Downloader extends JPanel implements Runnable{
 
 	protected Thread thisThread;//当前线程
 	public static ThreadGroup downloaderGroup = new ThreadGroup("Donwload Threads");//线程组
+
+	public JProgressBar getProgressBar() {
+		return this.progressBar;
+	}
+
+	public JLabel getCompleteLabel() {
+		return this.completeLabel;
+	}
 
 	public Downloader(URL url, FileOutputStream fos, JButton[] bs) throws IOException {
 		downloadURL = url;
@@ -186,6 +190,7 @@ public class Downloader extends JPanel implements Runnable{
 				buttons[i].setEnabled(false);
 		}
 	}
+
 	public synchronized void startDownload() {
 		thisThread.start();
 	}

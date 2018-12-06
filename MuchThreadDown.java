@@ -16,17 +16,20 @@ public class MuchThreadDown {
     private int threadCount = 3;    // 线程数量
     private int completeThread = 0; // 完成下载的线程数量
     protected JButton[] buttons= new JButton[5];
+    protected Downloader downloader = null;
+    protected int total;//已经读取的字节数
 
     /**
      * @param path 文件 url
      * @param targetFilePath 保存下载文件的目录
      * @param threadCount 开启线程的数量，默认为 3
      */
-    public MuchThreadDown(String path, String targetFilePath, int threadCount, JButton[] bs) {
+    public MuchThreadDown(String path, String targetFilePath, int threadCount, JButton[] bs, Downloader downloader) {
         this.path = path;
         this.targetFilePath = targetFilePath;
         this.threadCount = threadCount;
         buttons = bs;
+        this.downloader = downloader;
     }
 
     /**
@@ -84,6 +87,13 @@ public class MuchThreadDown {
         public void run() {
             int i;
             System.out.println("线程"+ threadId + "开始下载");
+//            int total = 0;// 记录本次下载文件的大小
+            Runnable progressBarUpdate = new Runnable(){
+                public void run() {
+                    downloader.getProgressBar().setValue(total);
+                    downloader.getCompleteLabel().setText(Integer.toString(total));
+                }
+            };
             try {
                 // 分段请求网络连接，分段保存到本地
                 URL url = new URL(path);
@@ -123,10 +133,10 @@ public class MuchThreadDown {
                      */
                     byte[] buffer = new byte[1024];
                     int length = -1;
-                    int total = 0;// 记录本次下载文件的大小
-                    while((length = inputStream.read(buffer)) > 0){
+                    while((length = inputStream.read(buffer)) > 0 && (!downloader.isStopped())){
                         randomAccessFile.write(buffer, 0, length);
                         total += length;
+                        SwingUtilities.invokeLater(progressBarUpdate);
                         /*
                          * 将当前下载到的位置保存到文件中
                          */
